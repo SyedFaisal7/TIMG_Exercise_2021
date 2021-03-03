@@ -1,0 +1,110 @@
+<div class=" container ">
+  <div class=" row">
+    <div class=" col-12">
+      <div class=" card card-chart">
+        <div class=" card-header">
+          <div class=" row">
+            <div class=" col-sm-6 text-left">
+              <h5 class=" card-category">All Products</h5>
+              <h2 class=" card-title">Enhance Your Performance by Searching Products</h2>
+            </div>
+          </div>
+        </div>
+        <div class=" card-body">
+          <div class=" col-md-8 pr-md-1">
+            <div class=" form-group">
+              <label> Search </label>
+              <input class="form-control-plaintext" [(ngModel)]="search" type="text" placeholder="Enter to Search">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class=" card">
+        <div class=" card-header"><h5 class=" title">Current Order Listing</h5></div>
+
+        <div class=" card-body">
+          <div>
+            <div>
+              <table class="table table-hover" *ngIf="Allorder.length>0">
+                <thead>
+                  <tr>
+                    <th scope="col">OrderId</th>
+                    <th scope="col">ClientId</th>
+                    <th scope="col">ClientName</th>
+                    <th scope="col">OrderDate</th>
+                    <th scope="col">GST</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Operations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of Allorder|orderBy:'OrderId':true|filter:search| paginate:{itemsPerPage:5,currentPage:p} ">
+
+                    <td>{{order.orderId}}</td>
+                    <td>{{order.clientId}}</td>
+                    <td>{{order.clientName}}</td>
+                    <td>{{order.orderDate}}</td>
+                    <td>{{order.gst}}</td>
+                    <td>{{order.total}}</td>
+                    <td>
+                      <span style="cursor:pointer;text-decoration:underline" (click)="OrderItem(order.orderId)">View Order Item</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pagination">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class=" card">
+        <div class=" card-header"><h5 class=" title">Current OrderItem Listing</h5></div>
+
+        <div class=" card-body">
+          <div>
+            <div>
+              <table class="table table-hover" *ngIf="AllOrderItem.length>0">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">ProductCode</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">TotalPrice</th>
+                    <th scope="col">ParentOrderiD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of AllOrderItem|orderBy:'OrderId':true|filter:search| paginate:{itemsPerPage:5,currentPage:p} ">
+
+                    <td>{{order.orderItemId}}</td>
+                    <td>{{order.productCode}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.totalPrice}}</td>
+                    <td>{{order.orderId}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="pagination">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
